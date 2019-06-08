@@ -1,0 +1,31 @@
+{
+    "name": "void/laravel-tokenizer",
+    "description": "Sharing system for Eloquent Model",
+    "type": "library",
+    "require": {
+        "laravel/framework": "5.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Camille Greselle",
+            "email": "c.greselle33@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Void\\Tokenizer\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Void\\Tokenizer\\Providers\\TokenizerServiceProvider",
+                "Void\\Tokenizer\\Providers\\TokenizerRouteServiceProvider"
+            ],
+            "aliases": {
+                "Tokenizer": "Void\\Tokenizer\\Facades\\Tokenizer"
+            }
+        }
+    }
+}
