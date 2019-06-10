@@ -2,6 +2,7 @@
 
 namespace Void\Tokenizer\Providers;
 
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
@@ -11,7 +12,7 @@ use Void\Tokenizer\Exception\TokenSessionLimit;
 use Void\Tokenizer\Facades\Tokenizer;
 use Void\Tokenizer\Models\Token;
 
-class TokenizerRouteServiceProvider extends ServiceProvider
+class TokenizerRouteServiceProvider extends RouteServiceProvider
 {
     /**
      * Register Tokenizer RouteBinding & Routes
@@ -71,11 +72,11 @@ class TokenizerRouteServiceProvider extends ServiceProvider
                 return $this;
             }
 
-            $this->session_count += 1;
+            $token->session_count += 1;
 
             // Verify session_limit has not been reached.
             if ($token->session_count > $token->session_limit) {
-                throw new TokenSessionLimit(sprintf('Session limit reached for token: `%s`', $token->token));
+                throw new TokenSessionLimit(sprintf('Session limit reached for token: %s', $token->token));
             }
 
             Session::put($token->token, now()->addSeconds($token->session_duration));
