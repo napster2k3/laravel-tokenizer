@@ -24,6 +24,32 @@ class TokenizerController extends Controller
     }
 
     /**
+     * @param Token $token
+     * @param Request $request
+     * @return TokenResource
+     */
+    public function edit($token, Request $request)
+    {
+        $token = Token::findOrFail($token);
+        $validated = $request->validate([
+            'session_limit' => 'nullable|integer',
+            'session_count' => 'nullable|integer',
+            'session_duration' => 'nullable|integer',
+            'user_id' => 'nullable|integer',
+            'expired_at' => 'nullable|date',
+            'require_user' => 'required|boolean',
+        ]);
+
+        foreach ($validated as $field => $value) {
+            $token->{$field} = $value;
+        }
+
+        $token->save();
+
+        return new TokenResource($token);
+    }
+
+    /**
      * @param Request $request
      * @return TokenResource
      */
@@ -31,7 +57,9 @@ class TokenizerController extends Controller
     {
         $validated = $request->validate([
             'session_limit' => 'nullable|integer',
+            'session_count' => 'nullable|integer',
             'session_duration' => 'nullable|integer',
+            'user_id' => 'nullable|integer',
             'expired_at' => 'nullable|date',
             'require_user' => 'required|boolean',
             'tokenizeable_type' => 'required',

@@ -5,15 +5,26 @@
         <div class="bg-purple-400 font-semibold border-b-2 border-gray-300 px-6 py-3 text-white">
             Tokenizer
             <span v-if="createToken">> Create Token</span>
-            <span v-else-if="editToken">> Edit Token @{{ cEditToken.token }}</span>
+            <span v-if="editToken != null">> Edit Token @{{ cEditToken.token }}</span>
             <span class="inline-block bg-white rounded-full px-3 text-sm  text-purple-400 float-right align-middle">
-                App\Category:1829
+                @{{ model }}:@{{ modelId }}
             </span>
         </div>
 
         <div class="px-6 py-4">
             <div v-if="editToken != null" class="w-full ">
-                <div class="pb-4">
+
+                <div v-if="editSuccess" class="mb-3 bg-green-100 border-l-4 border-green-500 text-green-500 p-4" role="alert">
+                    <p class="font-bold"></p>
+                    <p>Token updated !</p>
+                </div>
+
+                <div v-if="editError" class="mb-3 bg-red-100 border-l-4 border-red-500 text-red-500 p-4" role="alert">
+                    <p class="font-bold"></p>
+                    <p>Error while updating token !</p>
+                </div>
+
+                <div class="pb-4 hidden">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                            for="grid-first-name">
                         Actions
@@ -188,11 +199,6 @@
             </div>
 
             <div v-else>
-
-                {{--<button @click="createToken = true" class="bg-white hover:bg-gray-100 text-purple-500 font-semibold py-1 px-4 text-xs border border-gray-400 rounded shadow">--}}
-                {{--+ New Token--}}
-                {{--</button>--}}
-
                 <div>
                     <button @click="createToken = true" class="
                     border shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold text-xs py-2 px-4 rounded
@@ -277,32 +283,6 @@
                             </button>
                         </div>
                     </div>
-
-
-                    {{--<div class="flex px-2 items-center cursor-pointer my-1 hover:bg-purple-100 rounded">--}}
-                    {{--<div class="text-3xl w-8 py-1 text-purple-500">•</div>--}}
-                    {{--<div class="w-1/5 py-1">--}}
-                    {{--dI73HgZwdU--}}
-                    {{--</div>--}}
-
-                    {{--<div class="w-2/5 py-1">--}}
-                    {{--<span class="inline-block text-xs bg-white border border-purple-200 rounded-full px-3 font-semibold text-purple-300">--}}
-                    {{--Session--}}
-                    {{--</span>--}}
-                    {{--<span class="inline-block text-xs bg-white border border-purple-200 rounded-full px-3 font-semibold text-purple-300">--}}
-                    {{--User--}}
-                    {{--</span>--}}
-                    {{--<span class="inline-block text-xs bg-white border border-purple-200 rounded-full px-3 font-semibold text-purple-300">--}}
-                    {{--Expires--}}
-                    {{--</span>--}}
-                    {{--</div>--}}
-                    {{--<div class="w-1/5">--}}
-                    {{--May 15 2019 : 16h43--}}
-                    {{--</div>--}}
-                    {{--<div class="w-1/5">--}}
-                    {{--May 28 2019 : 16h43--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
                 </div>
             </div>
         </div>
@@ -317,12 +297,18 @@
     var model = '{!! addslashes(get_class($model)) !!}';
     var modelId = {{ $model->id }};
     var fetchRoute = '{{ route('tokenizer.list', ['tokenizeable_type' => get_class($model)]) }}';
+    var editRoute = '{{ route('tokenizer.edit', '%s') }}';
 
     var vueTokenizer = new Vue({
         el: '#tokenizer',
         data: {
+            model: null,
+            modelId: null,
+
             editToken: null,
             editForm: {},
+            editSuccess: false,
+            editError: false,
 
             createToken: false,
             createForm: {
@@ -358,27 +344,36 @@
 
         watch: {
             cEditToken() {
-                this.editForm = {
-                    session_duration: this.cEditToken.session_duration,
-                    session_limit: this.cEditToken.session_limit,
-                    session_count: this.cEditToken.session_count,
-                    expired_at: this.cEditToken.expired_at,
-                    require_user: this.cEditToken.require_user
+                if (this.editToken != null) {
+                    this.editForm = {
+                        session_duration: this.cEditToken.session_duration,
+                        session_limit: this.cEditToken.session_limit,
+                        session_count: this.cEditToken.session_count,
+                        expired_at: this.cEditToken.expired_at,
+                        require_user: this.cEditToken.require_user
+                    }
                 }
             },
         },
 
         created() {
             this.fetch(fetchRoute);
-        },
-
-        mounted() {
+            this.model = model;
+            this.modelId = modelId;
         },
 
         methods: {
 
-            edit(index) {
-
+            edit() {
+                this.editSuccess = false;
+                this.editError = false;
+                axios.patch(editRoute.replace('%s', this.cEditToken.id), this.editForm)
+                        .then(res => {
+                            this.editSuccess = true;
+                            this.tokens.data[this.editToken] = res.data.data;
+                        }).catch(err => {
+                            this.editError = true;
+                });
             },
 
             create() {

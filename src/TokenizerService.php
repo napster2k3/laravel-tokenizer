@@ -25,6 +25,7 @@ class TokenizerService
         Route::middleware(config('tokenizer.admin_middleware'))->name('tokenizer.')->prefix('tokenizer')->group(function () {
             Route::get('tokenizeable', 'Void\Tokenizer\Http\Controllers\TokenizerController@list')->name('list');
             Route::post('tokenizeable', 'Void\Tokenizer\Http\Controllers\TokenizerController@create')->name('create');
+            Route::patch('tokenizeable/{token}', 'Void\Tokenizer\Http\Controllers\TokenizerController@edit')->name('edit');
         });
     }
 }
