@@ -4,7 +4,7 @@ namespace Void\Tokenizer\Models\Traits;
 
 use Carbon\Carbon;
 
-trait HasExpiration
+trait TokenExpires
 {
     /**
      * @return bool
@@ -19,7 +19,7 @@ trait HasExpiration
      */
     public function hasExpired()
     {
-        return $this->expired_at->isPast();
+        return $this->hasExpiration() && $this->expired_at->isPast();
     }
 
     /**

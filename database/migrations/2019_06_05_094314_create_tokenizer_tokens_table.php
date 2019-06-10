@@ -21,6 +21,7 @@ class CreateTokenizerTokensTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->index();
 
             $table->integer('session_limit')->nullable();
+            $table->integer('session_duration')->nullable();
             $table->integer('session_count')->nullable();
 
             $table->dateTime('expired_at')->nullable()->index();
@@ -33,6 +34,6 @@ class CreateTokenizerTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tokernizer_tokens');
+        Schema::dropIfExists('tokenizer_tokens');
     }
 }

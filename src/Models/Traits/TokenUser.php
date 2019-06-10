@@ -5,7 +5,7 @@ namespace Void\Tokenizer\Models\Traits;
 use Illuminate\Contracts\Auth\Authenticatable as UserAuthenticatable;
 use Void\Tokenizer\Facades\Tokenizer;
 
-trait HasUser
+trait TokenUser
 {
     /**
      * @return boolean

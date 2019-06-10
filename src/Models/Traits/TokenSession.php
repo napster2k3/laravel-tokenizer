@@ -3,7 +3,7 @@
 namespace Void\Tokenizer\Models\Traits;
 
 
-trait HasLimitedSession
+trait TokenSession
 {
     /**
      * @return bool
@@ -11,6 +11,14 @@ trait HasLimitedSession
     public function hasLimitedSession()
     {
         return !is_null($this->session_limit);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasReachedSessionLimit()
+    {
+        return $this->hasLimitedSession() && $this->session_count >= $this->session_limit;
     }
 
     /**

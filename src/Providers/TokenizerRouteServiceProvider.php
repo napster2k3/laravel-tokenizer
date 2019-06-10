@@ -8,12 +8,13 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Void\Tokenizer\Exception\TokenExpired;
 use Void\Tokenizer\Exception\TokenSessionLimit;
+use Void\Tokenizer\Facades\Tokenizer;
 use Void\Tokenizer\Models\Token;
 
 class TokenizerRouteServiceProvider extends ServiceProvider
 {
     /**
-     * Register Tokenizer RouteBinding
+     * Register Tokenizer RouteBinding & Routes
      *
      * @return void
      */
@@ -33,12 +34,14 @@ class TokenizerRouteServiceProvider extends ServiceProvider
                 // 2. Listen Router Matched Event
                 //    After event is dispatched, the route parameters are not resolved yet,
                 //    I couldn't use the advantage from the route binding and would have to run queries twice..
-
                 $this->expirationGuard($token)->userGuard($token)->sessionGuard($token);
 
                 return $token;
             });
         }
+
+        // Register Tokenizer Routes
+        Tokenizer::routes();
     }
 
     /**
@@ -75,7 +78,7 @@ class TokenizerRouteServiceProvider extends ServiceProvider
                 throw new TokenSessionLimit(sprintf('Session limit reached for token: `%s`', $token->token));
             }
 
-            Session::put($token->token, now()->addSeconds(config('tokernizer.session_time')));
+            Session::put($token->token, now()->addSeconds($token->session_duration));
 
             $token->save();
         }
