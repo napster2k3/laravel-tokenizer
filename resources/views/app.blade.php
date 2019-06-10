@@ -11,7 +11,7 @@
             </span>
         </div>
 
-        <div class="px-6 py-4">
+        <div class="px-6 py-4" style="height: 455px">
             <div v-if="editToken != null" class="w-full ">
 
                 <div v-if="editSuccess" class="mb-3 bg-green-100 border-l-4 border-green-500 text-green-500 p-4" role="alert">
@@ -344,6 +344,9 @@
 
         watch: {
             cEditToken() {
+                this.editSuccess = false;
+                this.editError = false;
+
                 if (this.editToken != null) {
                     this.editForm = {
                         session_duration: this.cEditToken.session_duration,
