@@ -5,7 +5,6 @@ namespace Void\Tokenizer\Providers;
 use Illuminate\Support\ServiceProvider;
 use Void\Tokenizer\Contracts\TokenGenerator;
 use Void\Tokenizer\Generators\LaravelGenerator;
-use Void\Tokenizer\Generators\RandomBytes;
 use Void\Tokenizer\TokenizerService;
 
 class TokenizerServiceProvider extends ServiceProvider
@@ -22,6 +21,8 @@ class TokenizerServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(TokenGenerator::class, LaravelGenerator::class);
+
+        \Void\Tokenizer\Facades\Tokenizer::forceDown();
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/tokenizer.php', 'tokenizer');
     }

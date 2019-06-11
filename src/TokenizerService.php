@@ -8,6 +8,31 @@ use Illuminate\Support\Facades\Route;
 class TokenizerService
 {
     /**
+     * @var bool
+     */
+    protected $forceDown = [];
+
+    /**
+     * @param mixed|null $model
+     */
+    public function forceDown($model = null)
+    {
+        if (!is_null($model) && is_array($model)) {
+            $this->forceDown = array_merge($this->forceDown, $model);
+        } else {
+            $this->forceDown[] = $model ?: '*';
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForcedDown($model)
+    {
+        return in_array(get_class($model), $this->forceDown) || in_array('*', $this->forceDown);
+    }
+
+    /**
      * Resolve User Model Through Laravel Auth User Provider
      *
      * @return Model

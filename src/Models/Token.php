@@ -3,6 +3,7 @@
 namespace Void\Tokenizer\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Void\Tokenizer\Facades\Tokenizer;
 use Void\Tokenizer\Models\Traits\TokenExpires;
 use Void\Tokenizer\Models\Traits\TokenSession;
 use Void\Tokenizer\Models\Traits\TokenUser;
@@ -22,6 +23,19 @@ class Token extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Tokenizer Forcedown.
+     */
+    public static function boot()
+    {
+        parent::boot();
+        static::retrieved(function($token) {
+            if (Tokenizer::isForcedDown($token->tokenizeable)) {
+                abort(404);
+            }
+        });
+    }
 
     /**
      * The tokenizeable polymophic relation.
