@@ -33,7 +33,7 @@ class TokenizerService
     }
 
     /**
-     * Resolve User Model Through Laravel Auth User Provider
+     * Resolve User Model Through Laravel Auth User Provider.
      *
      * @return Model
      */
@@ -43,7 +43,7 @@ class TokenizerService
     }
 
     /**
-     * Register Tokenizer Routes
+     * Register Tokenizer Routes.
      */
     public function routes()
     {

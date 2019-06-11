@@ -18,6 +18,7 @@ trait Tokenizeable
 
     /**
      * @param TokenBuilder $builder
+     *
      * @return mixed
      */
     public function createToken(TokenBuilder $builder)
@@ -30,7 +31,8 @@ trait Tokenizeable
 
     /**
      * @param TokenBuilder $builder
-     * @param int $number
+     * @param int          $number
+     *
      * @return \Illuminate\Support\Collection
      */
     public function createTokens(TokenBuilder $builder, int $number)

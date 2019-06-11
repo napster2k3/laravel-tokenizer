@@ -9,6 +9,7 @@ class LaravelGenerator implements TokenGenerator
 {
     /**
      * @param $length
+     *
      * @return string
      */
     public function generate($length = 10): string
