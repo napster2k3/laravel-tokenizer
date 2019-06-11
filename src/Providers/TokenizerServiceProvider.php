@@ -21,9 +21,7 @@ class TokenizerServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(TokenGenerator::class, LaravelGenerator::class);
-
-        \Void\Tokenizer\Facades\Tokenizer::forceDown();
-
+        
         $this->mergeConfigFrom(__DIR__.'/../../config/tokenizer.php', 'tokenizer');
     }
 
