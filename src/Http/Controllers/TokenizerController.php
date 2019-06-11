@@ -12,6 +12,7 @@ class TokenizerController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return TokenResource
      */
     public function list(Request $request)
@@ -24,20 +25,21 @@ class TokenizerController extends Controller
     }
 
     /**
-     * @param Token $token
+     * @param Token   $token
      * @param Request $request
+     *
      * @return TokenResource
      */
     public function edit($token, Request $request)
     {
         $token = Token::findOrFail($token);
         $validated = $request->validate([
-            'session_limit' => 'nullable|integer',
-            'session_count' => 'nullable|integer',
+            'session_limit'    => 'nullable|integer',
+            'session_count'    => 'nullable|integer',
             'session_duration' => 'nullable|integer',
-            'user_id' => 'nullable|integer',
-            'expired_at' => 'nullable|date',
-            'require_user' => 'required|boolean',
+            'user_id'          => 'nullable|integer',
+            'expired_at'       => 'nullable|date',
+            'require_user'     => 'required|boolean',
         ]);
 
         foreach ($validated as $field => $value) {
@@ -51,23 +53,24 @@ class TokenizerController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return TokenResource
      */
     public function create(Request $request, TokenGenerator $generator)
     {
         $validated = $request->validate([
-            'session_limit' => 'nullable|integer',
-            'session_count' => 'nullable|integer',
-            'session_duration' => 'nullable|integer',
-            'user_id' => 'nullable|integer',
-            'expired_at' => 'nullable|date',
-            'require_user' => 'required|boolean',
+            'session_limit'     => 'nullable|integer',
+            'session_count'     => 'nullable|integer',
+            'session_duration'  => 'nullable|integer',
+            'user_id'           => 'nullable|integer',
+            'expired_at'        => 'nullable|date',
+            'require_user'      => 'required|boolean',
             'tokenizeable_type' => 'required',
-            'tokenizeable_id' => 'required|integer'
+            'tokenizeable_id'   => 'required|integer',
         ]);
 
         return new TokenResource(Token::create(array_merge($validated, [
-            'token' => $generator->generate()
+            'token' => $generator->generate(),
         ])));
     }
 }

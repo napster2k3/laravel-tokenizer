@@ -2,7 +2,6 @@
 
 namespace Void\Tokenizer\Builder;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Void\Tokenizer\Contracts\TokenGenerator;
 
@@ -34,8 +33,9 @@ class TokenBuilder
     protected $generator;
 
     /**
-     * @param int $max
+     * @param int      $max
      * @param int|null $duration
+     *
      * @return $this
      */
     public function withSessions(int $max, int $duration = 3600)
@@ -58,6 +58,7 @@ class TokenBuilder
 
     /**
      * @param Carbon $expiredAt
+     *
      * @return $this
      */
     public function expiresOn(Carbon $expiredAt)
@@ -73,10 +74,10 @@ class TokenBuilder
     public function toArray()
     {
         return [
-            'session_limit' => $this->sessionLimit,
+            'session_limit'    => $this->sessionLimit,
             'session_duration' => $this->sessionDuration,
-            'require_user' => $this->requireUser,
-            'expired_at' => $this->expiredAt,
+            'require_user'     => $this->requireUser,
+            'expired_at'       => $this->expiredAt,
         ];
     }
 }

@@ -8,7 +8,7 @@ use Void\Tokenizer\Facades\Tokenizer;
 trait TokenUser
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function requireUser(): bool
     {
@@ -24,7 +24,7 @@ trait TokenUser
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function detachUser(): bool
     {
@@ -35,7 +35,8 @@ trait TokenUser
 
     /**
      * @param UserAuthenticatable $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function attachUser(UserAuthenticatable $user): bool
     {

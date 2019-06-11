@@ -30,7 +30,7 @@ class Token extends Model
     public static function boot()
     {
         parent::boot();
-        static::retrieved(function($token) {
+        static::retrieved(function ($token) {
             if (Tokenizer::isForcedDown($token->tokenizeable)) {
                 abort(404);
             }
@@ -52,6 +52,6 @@ class Token extends Model
      */
     public function isActive()
     {
-        return ! $this->hasExpired() && ! $this->hasReachedSessionLimit();
+        return !$this->hasExpired() && !$this->hasReachedSessionLimit();
     }
 }

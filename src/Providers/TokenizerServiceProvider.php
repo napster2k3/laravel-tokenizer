@@ -10,7 +10,7 @@ use Void\Tokenizer\TokenizerService;
 class TokenizerServiceProvider extends ServiceProvider
 {
     /**
-     * Register Tokenizer Service
+     * Register Tokenizer Service.
      *
      * @return void
      */
@@ -24,7 +24,7 @@ class TokenizerServiceProvider extends ServiceProvider
 
         \Void\Tokenizer\Facades\Tokenizer::forceDown();
 
-        $this->mergeConfigFrom(__DIR__ . '/../../config/tokenizer.php', 'tokenizer');
+        $this->mergeConfigFrom(__DIR__.'/../../config/tokenizer.php', 'tokenizer');
     }
 
     /**
@@ -33,11 +33,11 @@ class TokenizerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../config/tokenizer.php' => config_path('tokenizer.php'),
+            __DIR__.'/../../config/tokenizer.php' => config_path('tokenizer.php'),
         ]);
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'tokenizer');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Void\Tokenizer\Models\Traits;
 
-
 trait TokenSession
 {
     /**

@@ -5,7 +5,6 @@ namespace Void\Tokenizer\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Void\Tokenizer\Exception\TokenExpired;
 use Void\Tokenizer\Exception\TokenSessionLimit;
@@ -15,7 +14,7 @@ use Void\Tokenizer\Models\Token;
 class TokenizerRouteServiceProvider extends RouteServiceProvider
 {
     /**
-     * Register Tokenizer RouteBinding & Routes
+     * Register Tokenizer RouteBinding & Routes.
      *
      * @return void
      */
@@ -47,8 +46,10 @@ class TokenizerRouteServiceProvider extends RouteServiceProvider
 
     /**
      * @param Token $token
-     * @return $this
+     *
      * @throws TokenExpired
+     *
+     * @return $this
      */
     public function expirationGuard(Token $token)
     {
@@ -61,8 +62,10 @@ class TokenizerRouteServiceProvider extends RouteServiceProvider
 
     /**
      * @param Token $token
-     * @return $this
+     *
      * @throws TokenSessionLimit
+     *
+     * @return $this
      */
     public function sessionGuard(Token $token)
     {
@@ -89,6 +92,7 @@ class TokenizerRouteServiceProvider extends RouteServiceProvider
 
     /**
      * @param Token $token
+     *
      * @return $this
      */
     public function userGuard(Token $token)

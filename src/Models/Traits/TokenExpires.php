@@ -37,7 +37,7 @@ trait TokenExpires
      */
     public function getExpiredAtAttribute()
     {
-        if (! is_null($this->attributes['expired_at'])) {
+        if (!is_null($this->attributes['expired_at'])) {
             return Carbon::parse($this->attributes['expired_at']);
         }
     }

@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTokenizerTokensTable extends Migration
 {
@@ -11,7 +11,7 @@ class CreateTokenizerTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('tokenizer_tokens', function(Blueprint $table) {
+        Schema::create('tokenizer_tokens', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('token')->unique();
